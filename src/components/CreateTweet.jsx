@@ -1,34 +1,44 @@
-import { useState, useContext } from "react";
-import { TweetContext } from "../context/TweetContext";
+import { useState } from "react";
 import './CreateTweet.css';
 
 function CreateTweet() {
     const [tweet, setTweet] = useState('');
-    const { tweetList, setTweetList } = useContext(TweetContext);
-    
+    const [postInProgress, setPostInProgress] = useState(false);
+
+    const maxTweetLength = 140;
+
     const handleInputChange = (event) => {
         setTweet(event.target.value);
     }
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        setTweetList((prevState) => [
-            {
-                username:'Doron',
-                tweet: tweet,
-                date: new Date().toISOString()
-            },
-            ...prevState
-            ])
+        setPostInProgress(true);
+        const tweetData = {
+            userName:'Doron',
+            content: tweet,
+            date: new Date().toISOString()
+        };
+        const fetchURL = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet';
+        const postData = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tweetData)
+        };
+        const fetchPostData = fetch(fetchURL, postData).then(setPostInProgress(false)).catch((error) => { 
+            console.warn(`Failed to post Tweet: ${error}`);
+            setPostInProgress(false);
+        });
     }
 
     return (
         <div className="tweetForm">
             <form onSubmit={(event) => handleFormSubmit(event)}>
                 <textarea id="tweetContent" rows="6" placeholder="What's on your mind?" onChange={(event) => handleInputChange(event)}/>
-                <button id="postTweetBtn" disabled={tweet.length > 140 || tweet.length == 0 ? true : false}>Tweet</button>
+                <div className="loaderContainer" style={ postInProgress == true ? { display: 'block' } : { display: 'none' }}><div className="loader"></div></div>
+                <button id="postTweetBtn" disabled={tweet.length > maxTweetLength || tweet == '' || postInProgress == true ? true : false}>Tweet</button>
             </form>
-            {tweet.length > 140 ? <div id="maxLengthError">The tweet can't contain more than 140 chars.</div> : ''}
+            {tweet.length > maxTweetLength ? <div id="maxLengthError">The tweet can't contain more than {maxTweetLength} chars.</div> : ''}
         </div>
     )
 }

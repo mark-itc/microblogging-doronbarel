@@ -5,31 +5,32 @@ import Tweet from "./Tweet";
 function LoadTweets() {
     const { tweetList, setTweetList } = useContext(TweetContext);
 
-    async function getFromStorage() {
-        const tweetsInStorage = await localStorage.getItem('tweets');
-        if(tweetsInStorage !== null) {
-            setTweetList(JSON.parse(tweetsInStorage));
-        }
-    }
-
-    function setLocalStorage() {
-        localStorage.setItem("tweets", JSON.stringify(tweetList));
+    function fetchTweets() {
+        const fetchURL = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet';
+        const fetchedData = fetch(fetchURL);
+        fetchedData.then((response) => {
+            if(response.status == 200) {
+                response.json().then((result) => {
+                    setTweetList(result.tweets);
+                })
+            } else {
+                response.text().then(error => {
+                    console.log(error);
+                });
+            }
+        });
     }
 
     useEffect(() => {
-        getFromStorage();
-    }, [])
-
-    useEffect(() => {
-        setLocalStorage();
-    }, [tweetList])
+        setInterval(fetchTweets, 500);
+    }, []);
 
     return (
         tweetList.map((tweet) => (
             <Tweet
                 key={tweet.date} 
-                username={tweet.username}
-                tweet={tweet.tweet}
+                userName={tweet.userName}
+                content={tweet.content}
                 date={tweet.date} />
         ))
     )
