@@ -1,8 +1,9 @@
 import './Tweet.css';
 function Tweet(props) {
+    let date = new Date(props.date).toLocaleString("en-US", { hour12: false });
     return (
         <div className="tweet">
-            <div className="tweetDate">{props.date}</div>
+            <div className="tweetDate">{date}</div>
             <div className="tweetUsername">{props.userName}</div>
             <div className="tweetBody">
                 {props.content}

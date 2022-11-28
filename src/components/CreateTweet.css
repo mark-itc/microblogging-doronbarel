@@ -12,6 +12,11 @@ textarea {
     padding: 15px;
     border: 0;
 }
+@media screen and (max-width: 600px) {
+  .tweetForm {
+    width: 96%;
+  }
+}
 textarea::placeholder {
     color: #CCCCCC;
 }

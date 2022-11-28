@@ -27,6 +27,14 @@ h1 {
 #saveUsernameBtn:disabled {
     opacity: 50%;
 }
+@media screen and (max-width: 600px) {
+    #username{
+        width: 95%;
+    }
+    #saveUsernameBtn {
+        right: 20px;
+    }
+  }
 label {
     color: #FFF;
     opacity: 80%;

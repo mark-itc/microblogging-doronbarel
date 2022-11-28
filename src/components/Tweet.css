@@ -13,6 +13,11 @@
     grid-row-gap: 0px;
     overflow-wrap: break-word;
 }
+@media screen and (max-width: 600px) {
+    .tweet{
+      width: 97%;
+    }
+  }
 .tweetUsername {
     color: #6C757D;
     grid-area: 1 / 1 / 2 / 2;
