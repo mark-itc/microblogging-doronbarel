@@ -25,6 +25,7 @@
 .tweetDate {
     color: #6C757D;
     grid-area: 1 / 3 / 2 / 4;
+    text-align: right;
 }
 .tweetBody {
     margin-top: 6px;
