@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { TweetContext } from "../context/TweetContext";
 import './CreateTweet.css';
 
 function CreateTweet() {
+    const { authUser, setAuthUser } = useContext(TweetContext);
     const [tweet, setTweet] = useState('');
     const [postInProgress, setPostInProgress] = useState(false);
 
@@ -15,7 +17,7 @@ function CreateTweet() {
         event.preventDefault();
         setPostInProgress(true);
         const tweetData = {
-            userName:'Doron',
+            userName: authUser,
             content: tweet,
             date: new Date().toISOString()
         };

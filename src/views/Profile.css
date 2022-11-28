@@ -1,0 +1,40 @@
+h1 {
+    color: #FFF;
+}
+
+#username {
+    width: 100%;
+    height: 60px;
+    border: 2px solid #CCCCCC;
+    border-radius: 6px;
+    background-color:inherit;
+    color: #FFF;
+    padding-left: 10px;
+}
+
+#username:focus {
+    outline: none;
+}
+
+#saveUsernameBtn {
+    position: absolute;
+    right: -5px;
+    bottom: -45px;
+    width: 70px;
+    height: 35px;
+    color: #FFF;
+    background-color: #007BFF;
+    border: 0;
+    border-radius: 4px;
+}
+
+#saveUsernameBtn:disabled {
+    opacity: 50%;
+}
+
+label {
+    color: #FFF;
+    opacity: 80%;
+    display: inline-block;
+    margin-bottom: 6px;
+}
