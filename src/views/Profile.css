@@ -29,10 +29,10 @@ h1 {
 }
 @media screen and (max-width: 600px) {
     #username{
-        width: 95%;
+        width: 90%;
     }
     #saveUsernameBtn {
-        right: 20px;
+        right: 45px;
     }
   }
 label {
