@@ -1,11 +1,9 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { TweetContext } from "../context/TweetContext";
 import './CreateTweet.css';
 
 function CreateTweet() {
-    const { authUser, setAuthUser } = useContext(TweetContext);
-    const [tweet, setTweet] = useState('');
-    const [postInProgress, setPostInProgress] = useState(false);
+    const { tweet, setTweet, postInProgress, setPostInProgress, authUser, setAuthUser } = useContext(TweetContext);
 
     const maxTweetLength = 140;
 
