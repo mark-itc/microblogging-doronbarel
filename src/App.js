@@ -4,14 +4,12 @@ import { TweetContext } from "./context/TweetContext";
 import Feed from "./views/Feed";
 import Profile from "./views/Profile";
 import './App.css';
-
 function App() {
   const { authUser, setAuthUser } = useContext(TweetContext);
   useEffect(() => {
     let localUser = localStorage.getItem("username");
     setAuthUser(localUser == null ? 'Guest' : localUser);
   }, []);
-
   return (
     <div className="App">
       <div className="navbar">
@@ -27,5 +25,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

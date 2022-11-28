@@ -1,10 +1,8 @@
 import { useContext, useEffect } from "react";
 import { TweetContext } from "../context/TweetContext";
 import Tweet from "./Tweet";
-
 function LoadTweets() {
     const { tweetList, setTweetList } = useContext(TweetContext);
-
     function fetchTweets() {
         const fetchURL = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet';
         const fetchedData = fetch(fetchURL);
@@ -20,11 +18,9 @@ function LoadTweets() {
             }
         });
     }
-
     useEffect(() => {
         setInterval(fetchTweets, 500);
     }, []);
-
     return (
         tweetList.map((tweet) => (
             <Tweet
@@ -35,5 +31,4 @@ function LoadTweets() {
         ))
     )
 }
-
 export default LoadTweets;

@@ -1,5 +1,4 @@
 import './Tweet.css';
-
 function Tweet(props) {
     return (
         <div className="tweet">
@@ -11,5 +10,4 @@ function Tweet(props) {
         </div>
     )
 }
-
 export default Tweet;

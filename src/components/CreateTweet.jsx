@@ -1,16 +1,12 @@
 import { useContext } from "react";
 import { TweetContext } from "../context/TweetContext";
 import './CreateTweet.css';
-
 function CreateTweet() {
     const { tweet, setTweet, postInProgress, setPostInProgress, authUser, setAuthUser } = useContext(TweetContext);
-
     const maxTweetLength = 140;
-
     const handleInputChange = (event) => {
         setTweet(event.target.value);
     }
-
     const handleFormSubmit = (event) => {
         event.preventDefault();
         setPostInProgress(true);
@@ -30,7 +26,6 @@ function CreateTweet() {
             setPostInProgress(false);
         });
     }
-
     return (
         <div className="tweetForm">
             <form onSubmit={(event) => handleFormSubmit(event)}>
@@ -42,5 +37,4 @@ function CreateTweet() {
         </div>
     )
 }
-
 export default CreateTweet;

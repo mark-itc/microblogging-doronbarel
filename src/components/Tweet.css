@@ -13,17 +13,14 @@
     grid-row-gap: 0px;
     overflow-wrap: break-word;
 }
-
 .tweetUsername {
     color: #6C757D;
     grid-area: 1 / 1 / 2 / 2;
 }
-
 .tweetDate {
     color: #6C757D;
     grid-area: 1 / 3 / 2 / 4;
 }
-
 .tweetBody {
     margin-top: 6px;
     color: #FFFFFF;
