@@ -18,7 +18,7 @@ function Profile() {
             <input type="text" id="username" value={user} onChange={(event) => {
                 setUser(event.target.value);
             }}/>
-            <button id="saveUsernameBtn" disabled={user == '' ? true : false} onClick={() => {
+            <button id="saveUsernameBtn" disabled={user == '' || user.trim().length == 0 ? true : false} onClick={() => {
                 setAuthUserDetails();
             }}>Save</button>
         </div>
