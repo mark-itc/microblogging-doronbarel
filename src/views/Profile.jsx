@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Profile.css';
 function Profile() {
-    const { authUser, setAuthUser, state, dispatch } = useContext(TweetContext);
-    const [user, setUser] = useState(authUser);
+    const { state, dispatch } = useContext(TweetContext);
+    const [user, setUser] = useState(state.authUser);
+    console.log('user', user);
     const navigate = useNavigate();
     const setAuthUserDetails = () => {
         localStorage.setItem("username", user);
@@ -18,7 +19,7 @@ function Profile() {
             <input type="text" id="username" value={user} onChange={(event) => {
                 setUser(event.target.value);
             }}/>
-            <button id="saveUsernameBtn" disabled={user == '' || user.trim().length == 0 ? true : false} onClick={() => {
+            <button id="saveUsernameBtn" disabled={user === '' || user.trim().length === 0 ? true : false} onClick={() => {
                 setAuthUserDetails();
             }}>Save</button>
         </div>

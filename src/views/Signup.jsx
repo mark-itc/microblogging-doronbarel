@@ -24,15 +24,13 @@ function Signup() {
     const [signupError, setSignupError] = useState('');
     const navigate = useNavigate();
     const handleSignup = () => {
-        console.log('inside processsignup');
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            dispatch({ type: ACTIONS.AUTHENTICATE_USER, payload: userCredential.user.uid })
+            dispatch({ type: ACTIONS.AUTHENTICATE_USER, payload: userCredential.user })
             navigate('/');
-            // ...
         })
         .catch((error) => {
             const errorCode = error.code;

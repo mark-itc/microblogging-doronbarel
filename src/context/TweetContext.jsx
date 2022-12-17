@@ -12,6 +12,7 @@ const initialState = {
 export const ACTIONS = {
     AUTHENTICATE_USER: 'authenticate-user',
     LOAD_TWEETS: 'load-tweets',
+    LOAD_TWEETS_ON_SCROLL: 'load-tweets-on-scroll',
     TOGGLE_POST_IN_PROGRESS: 'toggle-post-in-progress',
     UPDATE_TWEET: 'update-tweet',
     LAST_TWEET_LOADED: 'last-tweet-loaded',
@@ -20,8 +21,11 @@ export const ACTIONS = {
 export function reducer(state, action) {
     switch(action.type) {
         case ACTIONS.AUTHENTICATE_USER:
-            return { ...state, authUser: action.payload };
+            return { ...state, authUser: action.payload.uid };
         case ACTIONS.LOAD_TWEETS:
+            //[...state.tweetsList, ...action.payload]
+            return { ...state, tweetsList: action.payload };
+        case ACTIONS.LOAD_TWEETS_ON_SCROLL:
             //[...state.tweetsList, ...action.payload]
             return { ...state, tweetsList: [...state.tweetsList, ...action.payload] };
         case ACTIONS.TOGGLE_POST_IN_PROGRESS:
@@ -29,7 +33,6 @@ export function reducer(state, action) {
         case ACTIONS.UPDATE_TWEET:
             return { ...state, draftTweet: action.payload };
         case ACTIONS.LAST_TWEET_LOADED:
-            console.log('payload is ', action.payload);
             return { ...state, lastTweetLoaded: action.payload };
         default:
             return state;
