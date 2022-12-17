@@ -2,7 +2,7 @@ import React, { useState, useReducer } from "react";
 export const TweetContext = React.createContext();
 
 const initialState = {
-    authUser: '',
+    authUser: localStorage.getItem("username"),
     tweetsList: [],
     postInProgress: false,
     draftTweet: '',

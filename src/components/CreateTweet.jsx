@@ -17,6 +17,7 @@ function CreateTweet() {
             content: state.draftTweet,
             date: Timestamp.now()
         };
+        console.log('tweetData', tweetData);
         const tweetsCollection = getCollection(db, 'Tweets');
         addDoc(tweetsCollection, tweetData);
         dispatch({ type: ACTIONS.UPDATE_TWEET, payload: '' });

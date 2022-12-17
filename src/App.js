@@ -18,8 +18,12 @@ function App() {
         <div className="links">
           <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Home</NavLink>
           <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Profile</NavLink>
-          <NavLink to="/signup" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign Up</NavLink>
-          <NavLink to="/signin" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign In</NavLink>
+          {localStorage.getItem("username") === null ? (
+            <>
+              <NavLink to="/signup" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign Up</NavLink>
+              <NavLink to="/signin" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign In</NavLink>
+            </>
+          ) : null}
         </div>
       </div>
       <Routes>

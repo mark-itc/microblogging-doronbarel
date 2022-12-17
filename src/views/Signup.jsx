@@ -27,8 +27,8 @@ function Signup() {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // Signed in 
             const user = userCredential.user;
+            localStorage.setItem("username", user.uid);
             dispatch({ type: ACTIONS.AUTHENTICATE_USER, payload: userCredential.user })
             navigate('/');
         })
@@ -36,12 +36,8 @@ function Signup() {
             const errorCode = error.code;
             const errorMessage = error.message;
             setSignupError(translateFirebaseError(errorCode));
-            console.log('errorcode', errorCode);
-            console.log('errorMessage', errorMessage);
-            // ..
         });
     }
-
     return (
         <div className="container">
             <h1>Sign Up</h1>
