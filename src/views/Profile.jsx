@@ -1,14 +1,14 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { TweetContext } from "../context/TweetContext";
+import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Profile.css';
 function Profile() {
-    const { authUser, setAuthUser } = useContext(TweetContext);
+    const { authUser, setAuthUser, state, dispatch } = useContext(TweetContext);
     const [user, setUser] = useState(authUser);
     const navigate = useNavigate();
     const setAuthUserDetails = () => {
         localStorage.setItem("username", user);
-        setAuthUser(user);
+        dispatch({ type: ACTIONS.AUTHENTICATE_USER, payload: user});
         navigate('/');
     }
     return (

@@ -1,39 +1,35 @@
 import { useContext } from "react";
-import { TweetContext } from "../context/TweetContext";
+import { TweetContext, ACTIONS } from "../context/TweetContext";
+import { collection as getCollection, addDoc, Timestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 import './CreateTweet.css';
 function CreateTweet() {
-    const { tweet, setTweet, postInProgress, setPostInProgress, authUser, setAuthUser } = useContext(TweetContext);
+    const { state, dispatch } = useContext(TweetContext);
     const maxTweetLength = 140;
     const handleInputChange = (event) => {
-        setTweet(event.target.value);
+        dispatch({ type: ACTIONS.UPDATE_TWEET, payload: event.target.value })
     }
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        setPostInProgress(true);
+        dispatch({ type: ACTIONS.TOGGLE_POST_IN_PROGRESS })
         const tweetData = {
-            userName: authUser,
-            content: tweet,
-            date: new Date().toISOString()
+            userName: state.authUser,
+            content: state.draftTweet,
+            date: Timestamp.now()
         };
-        const fetchURL = 'https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet';
-        const postData = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tweetData)
-        };
-        const fetchPostData = fetch(fetchURL, postData).then(setPostInProgress(false)).then(setTweet('')).catch((error) => { 
-            console.warn(`Failed to post Tweet: ${error}`);
-            setPostInProgress(false);
-        });
+        const tweetsCollection = getCollection(db, 'Tweets');
+        addDoc(tweetsCollection, tweetData);
+        dispatch({ type: ACTIONS.UPDATE_TWEET, payload: '' });
+        dispatch({ type: ACTIONS.TOGGLE_POST_IN_PROGRESS });
     }
     return (
         <div className="tweetForm">
             <form onSubmit={(event) => handleFormSubmit(event)}>
-                <textarea id="tweetContent" rows="6" placeholder="What's on your mind?" value={tweet} onChange={(event) => handleInputChange(event)}/>
-                <div className="loaderContainer" style={ postInProgress == true ? { display: 'block' } : { display: 'none' }}><div className="loader"></div></div>
-                <button id="postTweetBtn" disabled={tweet.length > maxTweetLength || tweet.trim().length == 0 || tweet == '' || postInProgress == true ? true : false}>Tweet</button>
+                <textarea id="tweetContent" rows="6" placeholder="What's on your mind?" value={state.draftTweet} onChange={(event) => handleInputChange(event)}/>
+                <div className="loaderContainer" style={ state.postInProgress == true ? { display: 'block' } : { display: 'none' }}><div className="loader"></div></div>
+                <button id="postTweetBtn" disabled={state.draftTweet.length > maxTweetLength || state.draftTweet.trim().length == 0 || state.draftTweet == '' || state.postInProgress == true ? true : false}>Tweet</button>
             </form>
-            {tweet.length > maxTweetLength ? <div id="maxLengthError">The tweet can't contain more than {maxTweetLength} chars.</div> : ''}
+            {state.draftTweet.length > maxTweetLength ? <div id="maxLengthError">The tweet can't contain more than {maxTweetLength} chars.</div> : ''}
         </div>
     )
 }

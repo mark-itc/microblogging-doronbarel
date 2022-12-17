@@ -3,6 +3,8 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import { TweetContext } from "./context/TweetContext";
 import Feed from "./views/Feed";
 import Profile from "./views/Profile";
+import Signup from "./views/Signup";
+import Signin from "./views/Signin";
 import './App.css';
 function App() {
   const { authUser, setAuthUser } = useContext(TweetContext);
@@ -16,10 +18,14 @@ function App() {
         <div className="links">
           <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Home</NavLink>
           <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Profile</NavLink>
+          <NavLink to="/signup" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign Up</NavLink>
+          <NavLink to="/signin" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign In</NavLink>
         </div>
       </div>
       <Routes>
         <Route path='/profile' element={<Profile />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/signin' element={<Signin />} />
         <Route path='/' element={<Feed />} />
       </Routes>
     </div>
