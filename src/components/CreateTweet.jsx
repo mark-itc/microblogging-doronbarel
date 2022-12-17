@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { TweetContext, ACTIONS } from "../context/TweetContext";
 import { collection as getCollection, addDoc, Timestamp } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import './CreateTweet.css';
 function CreateTweet() {
     const { state, dispatch } = useContext(TweetContext);
@@ -13,7 +13,7 @@ function CreateTweet() {
         event.preventDefault();
         dispatch({ type: ACTIONS.TOGGLE_POST_IN_PROGRESS })
         const tweetData = {
-            userName: state.authUser,
+            userName: auth.currentUser.email,
             content: state.draftTweet,
             date: Timestamp.now()
         };

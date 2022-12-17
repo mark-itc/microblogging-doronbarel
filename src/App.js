@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { TweetContext } from "./context/TweetContext";
+import { auth } from "./firebase";
 import Feed from "./views/Feed";
 import Profile from "./views/Profile";
 import Signup from "./views/Signup";
@@ -17,7 +18,7 @@ function App() {
       <div className="navbar">
         <div className="links">
           <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Home</NavLink>
-          <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Profile</NavLink>
+          {localStorage.getItem("username") !== null ? (<NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Profile</NavLink>) : null}
           {localStorage.getItem("username") === null ? (
             <>
               <NavLink to="/signup" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Sign Up</NavLink>

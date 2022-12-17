@@ -22,6 +22,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [signupError, setSignupError] = useState('');
+    const [isSigningIn, setIsSigningIn] = useState(false);
     const navigate = useNavigate();
     const handleSignup = () => {
         const auth = getAuth();

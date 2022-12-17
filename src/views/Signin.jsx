@@ -1,6 +1,7 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Signin.css';
 
@@ -22,9 +23,10 @@ function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [signinError, setSigninError] = useState('');
+    const [isSigningIn, setIsSigningIn] = useState(false);
     const navigate = useNavigate();
     const handleSignin = () => {
-        const auth = getAuth();
+        
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -38,7 +40,6 @@ function Signin() {
             setSigninError(translateFirebaseError(errorCode));
             console.log(errorCode);
         });
-
     }
     return (
         <div className="container">
