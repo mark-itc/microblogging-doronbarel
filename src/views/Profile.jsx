@@ -51,7 +51,7 @@ function Profile() {
         <div className="container">
             <h1>Profile</h1>
             {user.photoURL !== null && <img className="profileImg" src={user.photoURL}/>}
-            <label>Username</label>
+            <label>Email</label>
             <input type="text" id="username" value={user.email} disabled/>
             <label>Profile Image</label><br/>
             <input type="file" className="uploadImg" accept="image/*" onChange={handleImageChange}/>

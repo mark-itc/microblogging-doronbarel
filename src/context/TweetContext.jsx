@@ -1,7 +1,6 @@
 import React, { useState, useReducer } from "react";
 import { auth } from "../firebase";
 export const TweetContext = React.createContext();
-
 const initialState = {
     authUser: null,
     tweetsList: [],
@@ -9,7 +8,6 @@ const initialState = {
     draftTweet: '',
     lastTweetLoaded: '',
 }
-
 export const ACTIONS = {
     AUTHENTICATE_USER: 'authenticate-user',
     LOGOUT_USER: 'logout-user',
@@ -19,7 +17,6 @@ export const ACTIONS = {
     UPDATE_TWEET: 'update-tweet',
     LAST_TWEET_LOADED: 'last-tweet-loaded',
 }
-
 export function reducer(state, action) {
     switch(action.type) {
         case ACTIONS.AUTHENTICATE_USER:
@@ -43,15 +40,10 @@ export function reducer(state, action) {
             return state;
     }
 }
-
 export const TweetContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    const [tweet, setTweet] = useState('');
-    const [postInProgress, setPostInProgress] = useState(false);
-    const [tweetList, setTweetList] = useState([]);
-    const [authUser, setAuthUser] = useState('');
     return (
-        <TweetContext.Provider value={{ tweet, setTweet, postInProgress, setPostInProgress, tweetList, setTweetList, authUser, setAuthUser, state, dispatch }}>
+        <TweetContext.Provider value={{ state, dispatch }}>
             {children}
         </TweetContext.Provider>
     );
