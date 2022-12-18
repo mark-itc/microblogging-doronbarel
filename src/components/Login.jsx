@@ -28,11 +28,13 @@ function translateFirebaseError(errorMessage, isSigningIn) {
                 default:
                     return 'Error signing up. Please try again.';
             }
+        default:
+            break;
     }
 }
 
 function Login() {
-    const { state, dispatch } = useContext(TweetContext);
+    const { dispatch } = useContext(TweetContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [formError, setFormError] = useState('');
@@ -49,7 +51,6 @@ function Login() {
         })
         .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
             setFormError(translateFirebaseError(errorCode, isSigningIn));
         });
     }
@@ -63,9 +64,7 @@ function Login() {
         })
         .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
             setFormError(translateFirebaseError(errorCode, isSigningIn));
-            console.log(errorCode);
         });
     }
     return (
@@ -73,13 +72,13 @@ function Login() {
             { isSigningIn === false && (
                 <>
                     <h1>Sign Up</h1>
-                    <img id="signInWithGoogle" src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/>
+                    <img id="signInWithGoogle" alt ="Sign In With Google" src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/>
                     <span id="signInUpInstead">Already have an account? <span id="signInUpLink" onClick={() => setIsSigningIn(true) }>Sign in.</span></span>
                 </>)}
             { isSigningIn === true && (
                 <>
                     <h1>Sign In</h1>
-                    <img id="signInWithGoogle" src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/>
+                    <img id="signInWithGoogle" alt ="Sign In With Google" src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/>
                     <span id="signInUpInstead">Don't have an account? <span id="signInUpLink" onClick={() => setIsSigningIn(false) }>Sign up.</span></span>
                 </>)}
             <label>Email</label>

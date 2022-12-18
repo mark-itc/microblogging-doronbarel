@@ -27,8 +27,8 @@ function CreateTweet() {
         <div className="tweetForm">
             <form onSubmit={(event) => handleFormSubmit(event)}>
                 <textarea id="tweetContent" rows="6" placeholder="What's on your mind?" value={state.draftTweet} onChange={(event) => handleInputChange(event)}/>
-                <div className="loaderContainer" style={ state.postInProgress == true ? { display: 'block' } : { display: 'none' }}><div className="loader"></div></div>
-                <button id="postTweetBtn" disabled={state.draftTweet.length > maxTweetLength || state.draftTweet.trim().length == 0 || state.draftTweet == '' || state.postInProgress == true ? true : false}>Tweet</button>
+                <div className="loaderContainer" style={ state.postInProgress === true ? { display: 'block' } : { display: 'none' }}><div className="loader"></div></div>
+                <button id="postTweetBtn" disabled={state.draftTweet.length > maxTweetLength || state.draftTweet.trim().length === 0 || state.draftTweet === '' || state.postInProgress === true ? true : false}>Tweet</button>
             </form>
             {state.draftTweet.length > maxTweetLength ? <div id="maxLengthError">The tweet can't contain more than {maxTweetLength} chars.</div> : ''}
         </div>

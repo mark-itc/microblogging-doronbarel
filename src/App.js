@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { ACTIONS, TweetContext } from "./context/TweetContext";
-import { auth, onAuthStateChanged } from "./firebase";
+import { auth } from "./firebase";
 import Feed from "./views/Feed";
 import Profile from "./views/Profile";
 import './App.css';

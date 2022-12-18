@@ -1,12 +1,11 @@
 import { useState, useEffect, useContext } from "react";
-import { getAuth, updateProfile } from "firebase/auth";
-import { auth, onAuthStateChanged, storage } from '../firebase';
+import { updateProfile } from "firebase/auth";
+import { auth, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Profile.css';
 function Profile() {
-    const auth = getAuth();
-    const { state, dispatch } = useContext(TweetContext);
+    const { dispatch } = useContext(TweetContext);
     const [image, setImage] = useState(null);
     const [user, setUser] = useState({email: '', photoURL: null});
     useEffect(() => {
@@ -47,7 +46,7 @@ function Profile() {
             <label>Email</label>
             <input type="text" id="username" value={user.email} disabled/>
             <label>Profile Image</label><br/>
-            {user.photoURL !== null && <img className="profileImg" src={user.photoURL}/>}
+            {user.photoURL !== null && <img className="profileImg" alt="Avatar" src={user.photoURL}/>}
             <input type="file" className="uploadImg" accept="image/*" onChange={handleImageChange}/>
             <button id="uploadBtn" disabled={ image === null ? true : false } onClick={() => {
                 if(image) {

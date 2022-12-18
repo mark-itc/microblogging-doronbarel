@@ -4,45 +4,45 @@ import { db } from '../firebase';
 import { TweetContext, ACTIONS } from "../context/TweetContext";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 import Tweet from "./Tweet";
-const RESULTS_PER_PAGE = 10;
-const COLLECTION_NAME = 'Tweets';
-const ORDER_TWEETS_BY = 'date';
-const ORDER = 'desc';
+const CONFIG = {
+    RESULTS_PER_PAGE: 10,
+    COLLECTION_NAME: 'Tweets',
+    ORDER_TWEETS_BY: 'date',
+    ORDER: 'desc',
+    INITIAL_FETCH: 'initial-fetch',
+    SCROLL_FETCH: 'scroll-fetch'
+}
 function LoadTweets() {
     const { state, dispatch } = useContext(TweetContext);
-    const tweetsCollection = collection(db, COLLECTION_NAME);        
-    async function initialFetch() {
-        const initialTweetsQuery = query(tweetsCollection, orderBy(ORDER_TWEETS_BY, ORDER), limit(RESULTS_PER_PAGE));
+    const tweetsCollection = collection(db, CONFIG.COLLECTION_NAME);        
+    let fetchQuery = '';
+    async function fetchTweets(fetchType) {
+        if(fetchType === CONFIG.INITIAL_FETCH) {
+            fetchQuery = query(tweetsCollection, orderBy(CONFIG.ORDER_TWEETS_BY, CONFIG.ORDER), limit(CONFIG.RESULTS_PER_PAGE));
+        } else {
+            fetchQuery = query(tweetsCollection, orderBy(CONFIG.ORDER_TWEETS_BY, CONFIG.ORDER), startAfter(state.lastTweetLoaded), limit(CONFIG.RESULTS_PER_PAGE));
+        }
         let lastViewedTweet = '';
-        onSnapshot(initialTweetsQuery, (querySnapshot) => {
+        onSnapshot(fetchQuery, (querySnapshot) => {
             let firestoreTweets = [];
             querySnapshot.forEach((doc) => {
                 firestoreTweets.push({ id: doc.id, ...doc.data() });
                 lastViewedTweet = doc;
             });
             dispatch({ type: ACTIONS.LAST_TWEET_LOADED, payload: lastViewedTweet });
-            dispatch({ type: ACTIONS.LOAD_TWEETS, payload: firestoreTweets });
-        });
-    }
-    async function scrollFetch() {
-        const scrollTweetsQuery = query(tweetsCollection, orderBy(ORDER_TWEETS_BY, ORDER), startAfter(state.lastTweetLoaded), limit(RESULTS_PER_PAGE));
-        onSnapshot(scrollTweetsQuery, (querySnapshot) => {
-            let firestoreTweets = [];
-            let lastViewedTweet = '';
-            querySnapshot.forEach((doc) => {
-                firestoreTweets.push({ id: doc.id, ...doc.data() });
-                lastViewedTweet = doc;
-            });
-            dispatch({ type: ACTIONS.LAST_TWEET_LOADED, payload: lastViewedTweet });
-            dispatch({ type: ACTIONS.LOAD_TWEETS_ON_SCROLL, payload: firestoreTweets });
+            if(fetchType === CONFIG.INITIAL_FETCH) {
+                dispatch({ type: ACTIONS.LOAD_TWEETS, payload: firestoreTweets });
+            } else {
+                dispatch({ type: ACTIONS.LOAD_TWEETS_ON_SCROLL, payload: firestoreTweets });
+            }
         });
     }
     useEffect(() => {
-        initialFetch();
+        fetchTweets(CONFIG.INITIAL_FETCH);
     }, []);
     return (
         <>
-            <BottomScrollListener onBottom={scrollFetch} />
+            <BottomScrollListener onBottom={() => fetchTweets(CONFIG.SCROLL_FETCH)} />
             {state.tweetsList.map((tweet) => (
                 <Tweet
                     key={tweet.id} 
