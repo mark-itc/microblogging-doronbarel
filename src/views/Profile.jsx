@@ -9,8 +9,7 @@ function Profile() {
     const auth = getAuth();
     const { state, dispatch } = useContext(TweetContext);
     const [image, setImage] = useState(null);
-    const [imageURL, setImageURL] = useState(null);
-    const [user, setUser] = useState({email: null, photoURL: null});
+    const [user, setUser] = useState({email: '', photoURL: null});
     const navigate = useNavigate();
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -31,7 +30,6 @@ function Profile() {
         .then(() => {
             getDownloadURL(imageRef)
             .then((url) => {
-                setImageURL(url);
                 console.log("ImageURL ", url);
                 updateProfile(auth.currentUser, { photoURL: `${url}` })
                 .then(() => {

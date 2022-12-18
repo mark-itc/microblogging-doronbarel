@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth, signInWithGoogle } from "../firebase";
 import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Login.css';
 
@@ -79,6 +79,7 @@ function Login() {
             { isSigningIn === true && (
                 <>
                     <h1>Sign In</h1>
+                    <img src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/><button onClick={signInWithGoogle}>Sign in with Google</button>
                     <span id="signinInstead">Don't have an account? <a href="#" onClick={() => setIsSigningIn(false) }>Sign up.</a></span>
                 </>)}
             <label>Email</label>
