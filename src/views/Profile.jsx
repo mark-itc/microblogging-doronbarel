@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { auth, onAuthStateChanged, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { ACTIONS, TweetContext } from "../context/TweetContext";
@@ -10,7 +9,6 @@ function Profile() {
     const { state, dispatch } = useContext(TweetContext);
     const [image, setImage] = useState(null);
     const [user, setUser] = useState({email: '', photoURL: null});
-    const navigate = useNavigate();
     useEffect(() => {
         auth.onAuthStateChanged(user => {
           if(user !== null) {
@@ -30,10 +28,8 @@ function Profile() {
         .then(() => {
             getDownloadURL(imageRef)
             .then((url) => {
-                console.log("ImageURL ", url);
                 updateProfile(auth.currentUser, { photoURL: `${url}` })
                 .then(() => {
-                    console.log("image upload success");
                     window.location.reload();
                 }).catch((error) => { console.log(error); });
             })
@@ -48,16 +44,16 @@ function Profile() {
     return (
         <div className="container">
             <h1>Profile</h1>
-            {user.photoURL !== null && <img className="profileImg" src={user.photoURL}/>}
             <label>Email</label>
             <input type="text" id="username" value={user.email} disabled/>
             <label>Profile Image</label><br/>
+            {user.photoURL !== null && <img className="profileImg" src={user.photoURL}/>}
             <input type="file" className="uploadImg" accept="image/*" onChange={handleImageChange}/>
-            <button id="saveUsernameBtn" onClick={() => {
+            <button id="uploadBtn" disabled={ image === null ? true : false } onClick={() => {
                 if(image) {
                     handleImageUpload();
                 }
-            }}>Save</button>
+            }}>Upload</button>
         </div>
     );
 }

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { auth, signInWithGoogle } from "../firebase";
 import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Login.css';
-
 function translateFirebaseError(errorMessage, isSigningIn) {
     switch(isSigningIn) {
         case true:
