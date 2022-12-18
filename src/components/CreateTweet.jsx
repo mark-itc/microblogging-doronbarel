@@ -15,7 +15,8 @@ function CreateTweet() {
         const tweetData = {
             userName: auth.currentUser.email,
             content: state.draftTweet,
-            date: Timestamp.now()
+            date: Timestamp.now(),
+            avatar: auth.currentUser.photoURL
         };
         console.log('tweetData', tweetData);
         const tweetsCollection = getCollection(db, 'Tweets');

@@ -32,3 +32,6 @@
     color: #FFFFFF;
     grid-area: 2 / 1 / 3 / 4;
 }
+.avatar {
+    width: 15px;
+}

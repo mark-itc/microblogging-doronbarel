@@ -49,7 +49,8 @@ function LoadTweets() {
                     id={tweet.id}
                     userName={tweet.userName}
                     content={tweet.content}
-                    date={tweet.date} />
+                    date={tweet.date} 
+                    avatar={tweet.avatar}/>
             ))}
         </>
     )
