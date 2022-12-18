@@ -2,13 +2,11 @@ import { useContext, useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { ACTIONS, TweetContext } from "./context/TweetContext";
 import { auth, onAuthStateChanged } from "./firebase";
-import { useNavigate } from "react-router-dom";
 import Feed from "./views/Feed";
 import Profile from "./views/Profile";
 import './App.css';
 function App() {
   const { state, dispatch } = useContext(TweetContext);
-  const navigate = useNavigate();
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if(user !== null) {

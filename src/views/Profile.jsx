@@ -1,9 +1,8 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, storage } from '../firebase';
+import { auth, onAuthStateChanged, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
 import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Profile.css';
 function Profile() {
@@ -11,19 +10,23 @@ function Profile() {
     const { state, dispatch } = useContext(TweetContext);
     const [image, setImage] = useState(null);
     const [imageURL, setImageURL] = useState(null);
-    const [user, setUser] = useState(state.authUser);
+    const [user, setUser] = useState({email: null, photoURL: null});
     const navigate = useNavigate();
-    const setAuthUserDetails = () => {
-        dispatch({ type: ACTIONS.AUTHENTICATE_USER, payload: user});
-        navigate('/');
-    }
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+          if(user !== null) {
+            setUser({email: auth.currentUser.email, photoURL: auth.currentUser.photoURL});
+            dispatch({type: ACTIONS.AUTHENTICATE_USER });
+          }
+        })
+      }, []);
     const handleImageChange = (e) => {
         if(e.target.files[0]) {
             setImage(e.target.files[0]);
         }
     }
     const handleImageUpload = () => {
-        const imageRef = ref(storage, "images/");
+        const imageRef = ref(storage, "images/" + auth.currentUser.uid);
         uploadBytes(imageRef, image)
         .then(() => {
             getDownloadURL(imageRef)
@@ -32,7 +35,8 @@ function Profile() {
                 console.log("ImageURL ", url);
                 updateProfile(auth.currentUser, { photoURL: `${url}` })
                 .then(() => {
-                    console.log("success");
+                    console.log("image upload success");
+                    window.location.reload();
                 }).catch((error) => { console.log(error); });
             })
             .catch((error) => {
@@ -46,13 +50,12 @@ function Profile() {
     return (
         <div className="container">
             <h1>Profile</h1>
+            {user.photoURL !== null && <img className="profileImg" src={user.photoURL}/>}
             <label>Username</label>
-            <input type="text" id="username" value={user} onChange={(event) => {
-                setUser(event.target.value);
-            }}/>
-            <input type="file" accept="image/*" onChange={handleImageChange}/>
-            <button id="saveUsernameBtn" disabled={user === '' || user.trim().length === 0 ? true : false} onClick={() => {
-                setAuthUserDetails();
+            <input type="text" id="username" value={user.email} disabled/>
+            <label>Profile Image</label><br/>
+            <input type="file" className="uploadImg" accept="image/*" onChange={handleImageChange}/>
+            <button id="saveUsernameBtn" onClick={() => {
                 if(image) {
                     handleImageUpload();
                 }

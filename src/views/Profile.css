@@ -9,6 +9,7 @@ h1 {
     background-color:inherit;
     color: #FFF;
     padding-left: 10px;
+    margin-bottom: 10px;
 }
 #username:focus {
     outline: none;
@@ -30,6 +31,7 @@ h1 {
 @media screen and (max-width: 600px) {
     #username{
         width: 90%;
+        margin-bottom: 10px;
     }
     #saveUsernameBtn {
         right: 45px;
@@ -40,4 +42,12 @@ label {
     opacity: 80%;
     display: inline-block;
     margin-bottom: 6px;
+}
+.profileImg {
+    width: 50px;
+    display: block;
+    margin-bottom: 10px;
+}
+.uploadImg {
+    color: #FFF;
 }
