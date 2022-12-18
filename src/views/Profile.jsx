@@ -8,15 +8,12 @@ import { ACTIONS, TweetContext } from "../context/TweetContext";
 import './Profile.css';
 function Profile() {
     const auth = getAuth();
-    console.log('imgurl user', auth.currentUser.imageURL);
     const { state, dispatch } = useContext(TweetContext);
     const [image, setImage] = useState(null);
     const [imageURL, setImageURL] = useState(null);
     const [user, setUser] = useState(state.authUser);
-    console.log('user', user);
     const navigate = useNavigate();
     const setAuthUserDetails = () => {
-        localStorage.setItem("username", user);
         dispatch({ type: ACTIONS.AUTHENTICATE_USER, payload: user});
         navigate('/');
     }
@@ -46,14 +43,9 @@ function Profile() {
             console.log(error.message)
         });
     }
-    const handleSignout = () => {
-        dispatch({ type: ACTIONS.LOGOUT_USER });
-        navigate('/login');
-    }
     return (
         <div className="container">
             <h1>Profile</h1>
-            <button onClick={handleSignout}>LOGOUT</button>
             <label>Username</label>
             <input type="text" id="username" value={user} onChange={(event) => {
                 setUser(event.target.value);

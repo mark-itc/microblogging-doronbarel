@@ -78,7 +78,7 @@ function Login() {
                 </>)}
             { isSigningIn === true && (
                 <>
-                    <h1>Sign Up</h1>
+                    <h1>Sign In</h1>
                     <span id="signinInstead">Don't have an account? <a href="#" onClick={() => setIsSigningIn(false) }>Sign up.</a></span>
                 </>)}
             <label>Email</label>

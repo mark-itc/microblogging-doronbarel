@@ -37,6 +37,6 @@ a {
 .active {
   opacity: 100%;
 }
-.inactive {
+.inactive, .logoutBtn {
   opacity: 50%;
 }

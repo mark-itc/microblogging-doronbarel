@@ -1,36 +1,40 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Routes, Route, NavLink } from 'react-router-dom';
-import { TweetContext } from "./context/TweetContext";
-import { auth } from "./firebase";
+import { ACTIONS, TweetContext } from "./context/TweetContext";
+import { auth, onAuthStateChanged } from "./firebase";
+import { useNavigate } from "react-router-dom";
 import Feed from "./views/Feed";
 import Profile from "./views/Profile";
-import Login from "./views/Login";
 import './App.css';
 function App() {
-  console.log('authstate', auth.currentUser);
   const { state, dispatch } = useContext(TweetContext);
-  /*
+  const navigate = useNavigate();
   useEffect(() => {
-    let localUser = localStorage.getItem("username");
-    setAuthUser(localUser == null ? 'Guest' : localUser);
+    auth.onAuthStateChanged(user => {
+      if(user !== null) {
+        dispatch({type: ACTIONS.AUTHENTICATE_USER });
+      }
+    })
   }, []);
-  */
+  const handleSignout = () => {
+    dispatch({ type: ACTIONS.LOGOUT_USER });
+    window.location.href = '../';
+  }
   return (
     <div className="App">
       <div className="navbar">
         <div className="links">
           <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Home</NavLink>
-          {state.authUser !== null ? (<NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Profile</NavLink>) : null}
-          {state.authUser === null ? (
+          {state.authUser !== null ? (
             <>
-              <NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Login</NavLink>
+              <NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : 'inactive')}>Profile</NavLink>
+              <NavLink onClick={handleSignout} className="logoutBtn">Logout</NavLink>
             </>
           ) : null}
         </div>
       </div>
       <Routes>
         <Route path='/profile' element={<Profile />} />
-        <Route path='/login' element={<Login />} />
         <Route path='/' element={<Feed />} />
       </Routes>
     </div>

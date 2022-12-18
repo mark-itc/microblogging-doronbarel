@@ -23,9 +23,11 @@ export const ACTIONS = {
 export function reducer(state, action) {
     switch(action.type) {
         case ACTIONS.AUTHENTICATE_USER:
+            localStorage.setItem("username", auth.currentUser.uid);
             return { ...state, authUser: auth.currentUser.uid };
         case ACTIONS.LOGOUT_USER:
             auth.signOut();
+            localStorage.removeItem("username");
             return { ...state, authUser: null };
         case ACTIONS.LOAD_TWEETS:
             return { ...state, tweetsList: action.payload };
