@@ -74,13 +74,14 @@ function Login() {
             { isSigningIn === false && (
                 <>
                     <h1>Sign Up</h1>
-                    <span id="signinInstead">Already have an account? <a href="#" onClick={() => setIsSigningIn(true) }>Sign in.</a></span>
+                    <img id="signInWithGoogle" src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/>
+                    <span id="signInUpInstead">Already have an account? <span id="signInUpLink" onClick={() => setIsSigningIn(true) }>Sign in.</span></span>
                 </>)}
             { isSigningIn === true && (
                 <>
                     <h1>Sign In</h1>
-                    <img src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/><button onClick={signInWithGoogle}>Sign in with Google</button>
-                    <span id="signinInstead">Don't have an account? <a href="#" onClick={() => setIsSigningIn(false) }>Sign up.</a></span>
+                    <img id="signInWithGoogle" src="https://i.stack.imgur.com/JkSed.png" onClick={signInWithGoogle}/>
+                    <span id="signInUpInstead">Don't have an account? <span id="signInUpLink" onClick={() => setIsSigningIn(false) }>Sign up.</span></span>
                 </>)}
             <label>Email</label>
             <input type="email" className="signupFormInput" value={email} onChange={(event) => {

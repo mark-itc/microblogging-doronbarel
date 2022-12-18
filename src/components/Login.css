@@ -14,10 +14,10 @@ h1 {
 .signupFormInput:focus {
     outline: none;
 }
-#signinInstead {
+#signInUpInstead {
     display: block;
     color: #FFF;
-    margin-bottom: 10px;
+    margin: 12px 0;
 }
 #signupBtn {
     position: absolute;
@@ -50,4 +50,17 @@ label {
 
 #signupError {
     color: #FFF;
+}
+
+#signInWithGoogle {
+    width: 180px;
+}
+#signInWithGoogle:hover{
+    cursor: pointer;
+}
+#signInUpLink {
+    font-weight: bold;
+}
+#signInUpLink:hover {
+    cursor: pointer;
 }
