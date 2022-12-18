@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { storage } from '../firebase';
+import { auth, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { ACTIONS, TweetContext } from "../context/TweetContext";
@@ -46,9 +46,14 @@ function Profile() {
             console.log(error.message)
         });
     }
+    const handleSignout = () => {
+        dispatch({ type: ACTIONS.LOGOUT_USER });
+        navigate('/login');
+    }
     return (
         <div className="container">
             <h1>Profile</h1>
+            <button onClick={handleSignout}>LOGOUT</button>
             <label>Username</label>
             <input type="text" id="username" value={user} onChange={(event) => {
                 setUser(event.target.value);

@@ -1,7 +1,7 @@
 h1 {
     color: #FFF;
 }
-.signinFormInput {
+.signupFormInput {
     width: 100%;
     height: 60px;
     border: 2px solid #CCCCCC;
@@ -11,10 +11,15 @@ h1 {
     padding-left: 10px;
     margin-bottom: 20px;
 }
-.signinFormInput:focus {
+.signupFormInput:focus {
     outline: none;
 }
-#signinBtn {
+#signinInstead {
+    display: block;
+    color: #FFF;
+    margin-bottom: 10px;
+}
+#signupBtn {
     position: absolute;
     right: -5px;
     bottom: -45px;
@@ -25,14 +30,14 @@ h1 {
     border: 0;
     border-radius: 4px;
 }
-#signinBtn:disabled {
+#signupBtn:disabled {
     opacity: 50%;
 }
 @media screen and (max-width: 600px) {
-    .signinFormInput{
+    .signupFormInput{
         width: 90%;
     }
-    #signinBtn {
+    #signupBtn {
         right: 45px;
     }
   }
@@ -43,6 +48,6 @@ label {
     margin-bottom: 6px;
 }
 
-#signinError {
+#signupError {
     color: #FFF;
 }

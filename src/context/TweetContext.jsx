@@ -1,8 +1,9 @@
 import React, { useState, useReducer } from "react";
+import { auth } from "../firebase";
 export const TweetContext = React.createContext();
 
 const initialState = {
-    authUser: localStorage.getItem("username"),
+    authUser: null,
     tweetsList: [],
     postInProgress: false,
     draftTweet: '',
@@ -11,6 +12,7 @@ const initialState = {
 
 export const ACTIONS = {
     AUTHENTICATE_USER: 'authenticate-user',
+    LOGOUT_USER: 'logout-user',
     LOAD_TWEETS: 'load-tweets',
     LOAD_TWEETS_ON_SCROLL: 'load-tweets-on-scroll',
     TOGGLE_POST_IN_PROGRESS: 'toggle-post-in-progress',
@@ -21,12 +23,13 @@ export const ACTIONS = {
 export function reducer(state, action) {
     switch(action.type) {
         case ACTIONS.AUTHENTICATE_USER:
-            return { ...state, authUser: action.payload.uid };
+            return { ...state, authUser: auth.currentUser.uid };
+        case ACTIONS.LOGOUT_USER:
+            auth.signOut();
+            return { ...state, authUser: null };
         case ACTIONS.LOAD_TWEETS:
-            //[...state.tweetsList, ...action.payload]
             return { ...state, tweetsList: action.payload };
         case ACTIONS.LOAD_TWEETS_ON_SCROLL:
-            //[...state.tweetsList, ...action.payload]
             return { ...state, tweetsList: [...state.tweetsList, ...action.payload] };
         case ACTIONS.TOGGLE_POST_IN_PROGRESS:
             return { ...state, postInProgress: !state.postInProgress };
